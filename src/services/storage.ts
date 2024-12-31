@@ -9,7 +9,7 @@ export enum MCPServerConfigSource {
   SELF = 'self',
 }
 
-export interface MCPServerConfig {
+export interface StoragedMCPServer {
   name: string;
   claudeId?: string;
   appConfig: MCPServerBootConfig;
@@ -21,12 +21,12 @@ export interface Config {
   apiKey?: string;
 }
 
-export interface MCPServerMap {
-  [key: string]: MCPServerConfig;
+export interface StoragedMCPServerMap {
+  [key: string]: StoragedMCPServer;
 }
 
 export type MCPServerConfigStorage = {
-  mcpServersMap?: MCPServerMap;
+  mcpServersMap?: StoragedMCPServerMap;
 };
 
 export class StorageService {
@@ -103,17 +103,17 @@ export class StorageService {
     }
   }
 
-  public getMCPServer(name: string): MCPServerConfig | undefined {
+  public getMCPServer(name: string): StoragedMCPServer | undefined {
     this.loadServersStorage();
     return this.mcpServersConfig.mcpServersMap?.[name];
   }
 
-  public getAllMCPServers(): MCPServerConfig[] {
+  public getAllMCPServers(): StoragedMCPServer[] {
     this.loadServersStorage();
     return Object.values(this.mcpServersConfig.mcpServersMap || {});
   }
 
-  public addMCPServers(servers: MCPServerConfig[]): void {
+  public addMCPServers(servers: StoragedMCPServer[]): void {
     this.loadServersStorage();
     this.mcpServersConfig.mcpServersMap = {
       ...this.mcpServersConfig.mcpServersMap,
@@ -128,7 +128,7 @@ export class StorageService {
     this.saveServersStorage();
   }
 
-  public addIfNotExistedMCPServer(server: MCPServerConfig): void {
+  public addIfNotExistedMCPServer(server: StoragedMCPServer): void {
     this.loadServersStorage();
     if (!this.mcpServersConfig.mcpServersMap?.[server.name]) {
       this.mcpServersConfig.mcpServersMap = {

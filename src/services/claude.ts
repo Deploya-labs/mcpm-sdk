@@ -2,7 +2,7 @@ import path from 'path';
 import os from 'os';
 import { promises as fsp } from 'fs';
 import {
-  MCPServerConfig,
+  StoragedMCPServer,
   MCPServerConfigSource,
   StorageService,
 } from './storage.js';
@@ -24,7 +24,7 @@ export interface ClaudeConfig {
 }
 
 export interface MCPServerWithStatus {
-  info: MCPServerConfig;
+  info: StoragedMCPServer;
   enabled: boolean;
 }
 
@@ -236,7 +236,7 @@ export class ClaudeHostService {
         }
         return acc;
       },
-      [] as MCPServerConfig[]
+      [] as StoragedMCPServer[]
     );
     this.storageSrv.addMCPServers(newEnabledServers);
     installedServers = [...installedServers, ...newEnabledServers];
@@ -284,7 +284,7 @@ export class ClaudeHostService {
 
   // eslint-disable-next-line @typescript-eslint/require-await
   async getDisabledMCPServers(): Promise<{
-    [key: string]: MCPServerConfig;
+    [key: string]: StoragedMCPServer;
   }> {
     const servers = await this.getAllMCPServersWithStatus();
     return servers
@@ -297,7 +297,7 @@ export class ClaudeHostService {
 
   // eslint-disable-next-line @typescript-eslint/require-await
   async getEnabledMCPServers(): Promise<{
-    [key: string]: MCPServerConfig;
+    [key: string]: StoragedMCPServer;
   }> {
     const servers = await this.getAllMCPServersWithStatus();
     return servers
@@ -317,7 +317,7 @@ export class ClaudeHostService {
   }
 
   public async addMCPMSelfMCPServer(): Promise<void> {
-    const selfConfig: MCPServerConfig = {
+    const selfConfig: StoragedMCPServer = {
       name: 'mcpm',
       appConfig: {
         command: 'mcpm',

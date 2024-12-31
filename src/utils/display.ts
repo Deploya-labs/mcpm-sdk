@@ -1,6 +1,6 @@
-import { MCPServerConfig } from '../services/storage.js';
+import { StoragedMCPServer } from '../services/storage.js';
 
-export const stringifyServerToTitle = (server: MCPServerConfig): string => {
+export const stringifyServerToTitle = (server: StoragedMCPServer): string => {
   return `${server.name} (${[
     server.appConfig.command,
     ...(server.appConfig.args ?? []),
