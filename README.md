@@ -3,19 +3,20 @@
 [![npm version](https://img.shields.io/npm/v/@mcpm/sdk.svg)](https://www.npmjs.com/package/@mcpm/sdk)
 [![npm downloads](https://img.shields.io/npm/dm/@mcpm/sdk.svg)](https://www.npmjs.com/package/@mcpm/sdk)
 [![Build Status](https://github.com/MCP-Club/mcpm/actions/workflows/test.yml/badge.svg)](https://github.com/MCP-Club/mcpm/actions)
-[![GitHub license](https://img.shields.io/github/license/MCP-Club/mcpm.svg)](https://github.com/MCP-Club/mcpm/blob/main/LICENSE)
-[![GitHub issues](https://img.shields.io/github/issues/MCP-Club/mcpm.svg)](https://github.com/MCP-Club/mcpm/issues)
-[![GitHub stars](https://img.shields.io/github/stars/MCP-Club/mcpm.svg)](https://github.com/MCP-Club/mcpm/stargazers)
+[![GitHub license](https://img.shields.io/github/license/MCP-Club/sdk.svg)](https://github.com/MCP-Club/mcpm/blob/main/LICENSE)
+[![GitHub issues](https://img.shields.io/github/issues/MCP-Club/sdk.svg)](https://github.com/MCP-Club/mcpm/issues)
+[![GitHub stars](https://img.shields.io/github/stars/MCP-Club/sdk.svg)](https://github.com/MCP-Club/mcpm/stargazers)
 
-A Node.js SDK for managing MCP projects programmatically.
+A powerful Node.js SDK for managing MCP projects and interacting with Claude AI programmatically.
 
 ## Highlights
 
-- 🚀 **Programmatic MCP Management**: Manage MCP projects programmatically using our Node.js SDK
-- 🔄 **Claude Integration**: Interact with Claude App programmatically using our SDK
-- 🛠️ **Package Discovery**: Search and discover MCP packages from the community
-- 🔌 **MCP Server Control**: Start and manage MCP servers programmatically
-- 📝 **JSON Configuration**: Manage MCP projects through JSON configuration files
+- 🎮 **Core MCP Operations**: Comprehensive APIs for managing MCP projects
+- 🤖 **Claude AI Integration**: Seamless integration with Claude AI for intelligent project assistance
+- 📦 **Dependency Management**: Smart dependency resolution and management
+- 💾 **Storage Services**: Efficient storage solutions for MCP projects
+- 🔄 **Project Utilities**: Helper functions for common MCP operations
+- 🛠️ **Extensible Architecture**: Easy to extend and customize for your needs
 
 ## Installation
 
@@ -26,41 +27,51 @@ npm install @mcpm/sdk
 ## Usage
 
 ```typescript
-import { ClaudeHostService, registrySrv } from '@mcpm/sdk';
+import { 
+  ClaudeService, 
+  DependencyService,
+  StorageService 
+} from '@mcpm/sdk';
 
-// Search for packages
-const packages = await registrySrv.searchPackages('your-search-query');
+// Initialize services
+const claudeService = new ClaudeService();
+const dependencyService = new DependencyService();
+const storageService = new StorageService();
 
-// Work with Claude
-const claudeSrv = new ClaudeHostService();
-// ... use Claude service
+// Work with Claude AI
+await claudeService.chat('Help me optimize my command');
 
-// Start MCP server programmatically
-import { MCPServer } from '@mcpm/sdk';
-const server = new MCPServer();
-await server.start();
+// Manage dependencies
+await dependencyService.checkDependency('your-package');
+
+// Handle storage operations
+await storageService.saveProject('project-name', projectData);
 ```
 
-## Configuration
+## Core Services
 
-- MCP projects are stored in JSON configuration files
-- Claude App configuration is managed programmatically using our SDK
+- **Claude Service**: Interact with Claude AI for intelligent assistance
+- **Dependency Service**: Manage project dependencies efficiently
+- **Storage Service**: Handle project storage and retrieval
+- **Display Utils**: Format and display information consistently
 
 ## Development
 
-### Publish A new version
+### Publishing New Versions
 
-GitHub Actions will automatically publish a new version when a new tag is created
+GitHub Actions will automatically publish a new version when a new tag is created:
 
 ```bash
 git tag v1.4.1
 git push origin v1.4.1
 ```
 
-## TODO
+## Roadmap
 
-- [x] Add Remote MCP Discovery (A MCPHub for search and recommendation)
-- [x] Auto Install MCP Servers For you
-- [ ] A GUI for MCPM SDK
+- [ ] Add more Claude AI capabilities
+- [ ] Enhance dependency resolution
+- [ ] Implement caching mechanisms
+- [ ] Add more utility functions
+- [ ] Improve error handling and logging
 
-For more information, visit our [MCP.md](./docs/MCP.md).
+For more information about MCP, visit our [MCP Documentation](./docs/MCP.md).
