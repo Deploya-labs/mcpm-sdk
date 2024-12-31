@@ -1,135 +1,50 @@
-# MCPM CLI
+# MCPM SDK
 
-[![npm version](https://img.shields.io/npm/v/@mcpm/cli.svg)](https://www.npmjs.com/package/@mcpm/cli)
-[![npm downloads](https://img.shields.io/npm/dm/@mcpm/cli.svg)](https://www.npmjs.com/package/@mcpm/cli)
+[![npm version](https://img.shields.io/npm/v/@mcpm/sdk.svg)](https://www.npmjs.com/package/@mcpm/sdk)
+[![npm downloads](https://img.shields.io/npm/dm/@mcpm/sdk.svg)](https://www.npmjs.com/package/@mcpm/sdk)
 [![Build Status](https://github.com/MCP-Club/mcpm/actions/workflows/test.yml/badge.svg)](https://github.com/MCP-Club/mcpm/actions)
 [![GitHub license](https://img.shields.io/github/license/MCP-Club/mcpm.svg)](https://github.com/MCP-Club/mcpm/blob/main/LICENSE)
 [![GitHub issues](https://img.shields.io/github/issues/MCP-Club/mcpm.svg)](https://github.com/MCP-Club/mcpm/issues)
 [![GitHub stars](https://img.shields.io/github/stars/MCP-Club/mcpm.svg)](https://github.com/MCP-Club/mcpm/stargazers)
 
-A command-line tool for managing MCP servers in Claude App.
+A Node.js SDK for managing MCP projects programmatically.
 
 ## Highlights
 
-- 🚀 **Easy Server Management**: Add, remove, and manage multiple MCP servers in Claude App with simple commands
-- 🔄 **Server Status Control**: Enable/disable servers and view their status at any time
-- 🛠️ **Interactive CLI**: User-friendly command-line interface with interactive prompts for easy configuration
-- 🔌 **Self-Integration**: Can add MCPM CLI itself as a MCP server with a single command
-- 📝 **JSON Configuration**: Manages servers through Claude's configuration file with proper error handling
-- 🔍 **Package Discovery**: Search and discover MCP packages from the community
-<!-- - 🎯 **Zero Dependencies**: Lightweight and efficient, built to work seamlessly with Claude App -->
-
-## TODO
-
-- [x] Add Remote MCP Discovery (A MCPHub for search and recommendation)
-- [x] Auto Install MCP Servers For you
-- [ ] A GUI for MCPM CLI
+- 🚀 **Programmatic MCP Management**: Manage MCP projects programmatically using our Node.js SDK
+- 🔄 **Claude Integration**: Interact with Claude App programmatically using our SDK
+- 🛠️ **Package Discovery**: Search and discover MCP packages from the community
+- 🔌 **MCP Server Control**: Start and manage MCP servers programmatically
+- 📝 **JSON Configuration**: Manage MCP projects through JSON configuration files
 
 ## Installation
 
 ```bash
-npm install -g @mcpm/cli
+npm install @mcpm/sdk
 ```
 
 ## Usage
 
-```bash
+```typescript
+import { ClaudeHostService, registrySrv } from '@mcpm/sdk';
 
-> mcpm help
+// Search for packages
+const packages = await registrySrv.searchPackages('your-search-query');
 
-Usage: mcpm [options] [command]
+// Work with Claude
+const claudeSrv = new ClaudeHostService();
+// ... use Claude service
 
-Options:
-  -V, --version         output the version number
-  -d, --debug           enables verbose logging (default: false)
-  -h, --help            display help for command
-
-Commands:
-  search [query]        Search for MCP packages
-  install <n>           Install a MCP package from the registry
-  add [options] [name]  Manually add a new MCP server to your Claude App
-  remove [name]         Remove a MCP server from your Claude App
-  disable [name]        Disable an MCP server (moves it from Claude to storage)
-  enable [name]         Enable a disabled MCP server (moves it from storage to Claude)
-  list [options]        List all your MCP servers
-  mcp                   Start the MCPM MCP server
-  restart               Restart Claude.app
-  help [command]        display help for command
-
-```
-
-### Search for MCP packages
-
-Search for available MCP packages in the registry:
-
-```bash
-mcpm search              # Interactive search mode
-mcpm search <query>      # Search with a specific query
-mcpm search --json       # Output results in JSON format
-```
-
-### Install a MCP package
-
-Install a MCP package by its ID:
-
-```bash
-mcpm install <package-id>     # Install a specific package
-mcpm i <package-id>          # Short alias for install
-mcpm install -y <package-id>  # Install without confirmation
-```
-
-### Remove a MCP server
-
-Remove a MCP server from Claude App:
-
-```bash
-mcpm remove                 # Interactive mode
-mcpm remove <name>          # Remove a specific server
-mcpm rm <name>              # Short alias for remove
-```
-
-### Disable an MCP server
-
-Moves a server from Claude App to storage, making it temporarily unavailable.
-
-```bash
-mcpm disable               # Interactive mode
-mcpm disable <name>        # Specify server name
-```
-
-### Enable an MCP server
-
-Moves a previously disabled server from storage back to Claude App.
-
-```bash
-mcpm enable               # Interactive mode
-mcpm enable <name>        # Specify server name
-```
-
-### List MCP servers
-
-```bash
-mcpm list            # Shows all configured MCP servers
-```
-
-### Start As A MCP Server
-
-```bash
-mcpm mcp               # Start MCPM as a MCP server
-```
-
-For more information, visit our [MCP.md](./docs/MCP.md).
-
-### Add itself as a MCP server to your Claude App
-
-```bash
-mcpm add --self          # Add MCPM CLI as a MCP server
+// Start MCP server programmatically
+import { MCPServer } from '@mcpm/sdk';
+const server = new MCPServer();
+await server.start();
 ```
 
 ## Configuration
 
-- Active servers are stored in Claude App's configuration
-- Disabled servers are stored in `~/.mcpm/*`
+- MCP projects are stored in JSON configuration files
+- Claude App configuration is managed programmatically using our SDK
 
 ## Development
 
@@ -141,3 +56,11 @@ GitHub Actions will automatically publish a new version when a new tag is create
 git tag v1.4.1
 git push origin v1.4.1
 ```
+
+## TODO
+
+- [x] Add Remote MCP Discovery (A MCPHub for search and recommendation)
+- [x] Auto Install MCP Servers For you
+- [ ] A GUI for MCPM SDK
+
+For more information, visit our [MCP.md](./docs/MCP.md).
