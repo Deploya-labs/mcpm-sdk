@@ -43,21 +43,4 @@ export type InstallPackageArguments = z.infer<
   typeof InstallPackageArgumentsSchema
 >;
 
-export interface MCPServerWithStatus {
-  name: string;
-  config: MCPServerConfig;
-  enabled: boolean;
-}
-
-export interface PackageInfo {
-  id: string;
-  name: string;
-  description: string;
-  version: string;
-  author?: string;
-  homepage?: string;
-  repository?: string;
-  parameters?: Record<string, string>;
-}
-
 export type MCPServer = Server;
