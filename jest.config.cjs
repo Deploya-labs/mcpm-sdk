@@ -12,22 +12,17 @@ module.exports = {
   collectCoverage: true,
   moduleNameMapper: {
     '^(\\.{1,2}/.*)\\.js$': '$1',
-    '^(\\.{1,2}/.*)\\.json$': '$1.json',
-    '#(.*)': '<rootDir>/node_modules/$1'
+    '^(\\.{1,2}/.*)\\.json$': '$1.json'
   },
-  extensionsToTreatAsEsm: ['.ts'],
+  extensionsToTreatAsEsm: ['.ts', '.mts'],
   transform: {
-    '^.+\\.tsx?$': [
+    '^.+\\.m?[tj]sx?$': [
       'ts-jest',
       {
         useESM: true,
         tsconfig: './tsconfig.json'
-      },
-    ],
-    '^.+\\.jsx?$': 'babel-jest'
+      }
+    ]
   },
-  transformIgnorePatterns: [
-    'node_modules/(?!(chalk)/.*)'
-  ],
   setupFilesAfterEnv: ['<rootDir>/src/__tests__/setup.ts'],
 };
