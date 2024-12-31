@@ -126,6 +126,16 @@ export async function restartClaude(): Promise<void> {
   }
 }
 
+export async function installUv(): Promise<void> {
+  if (process.platform === 'darwin' || process.platform === 'linux') {
+    await installUvOnMacOrLinux();
+  } else if (process.platform === 'win32') {
+    await installUvOnWin();
+  } else {
+    throw new Error('Unsupported platform');
+  }
+}
+
 export async function installUvOnMacOrLinux(): Promise<void> {
   // https://docs.astral.sh/uv/configuration/installer/
   // curl -LsSf https://astral.sh/uv/install.sh | env UV_INSTALL_DIR="/custom/path" sh
