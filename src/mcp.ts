@@ -13,7 +13,6 @@ import {
 } from './types/index.js';
 import { ClaudeHostService } from './services/claude.js';
 import { RegistryService } from './services/registry.js';
-import { version } from './utils/version.js';
 import { z } from 'zod';
 
 // Initialize services
@@ -24,7 +23,7 @@ const registrySrv = new RegistryService();
 const server = new Server(
   {
     name: 'mcpm',
-    version,
+    version: '1.0.2',
   },
   {
     capabilities: {
