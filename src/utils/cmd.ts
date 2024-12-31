@@ -152,3 +152,31 @@ export async function installUvOnWin(): Promise<void> {
     'powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex"'
   );
 }
+
+export async function installNode(): Promise<void> {
+  if (process.platform === 'darwin' || process.platform === 'linux') {
+    await installNodeOnMacOrLinux();
+  } else if (process.platform === 'win32') {
+    await installNodeOnWin();
+  } else {
+    throw new Error('Unsupported platform');
+  }
+}
+
+export async function installNodeOnMacOrLinux(): Promise<void> {
+  // Use nvm for both macOS and Linux
+  await execAsync(
+    'curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash'
+  );
+  // Source nvm and install Node.js
+  await execAsync(
+    'export NVM_DIR="$HOME/.nvm" && [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh" && nvm install --lts'
+  );
+}
+
+export async function installNodeOnWin(): Promise<void> {
+  // Using official Node.js installer through winget
+  await execAsync(
+    'powershell -ExecutionPolicy ByPass -c "winget install OpenJS.NodeJS.LTS"'
+  );
+}

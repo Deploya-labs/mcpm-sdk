@@ -1,6 +1,6 @@
 import { exec } from 'child_process';
 import { promisify } from 'util';
-import { installUv } from '../utils/cmd';
+import { installNode, installUv } from '../utils/cmd';
 
 const execAsync = promisify(exec);
 
@@ -47,18 +47,16 @@ export class DependencyService {
   }
 
   async installDependency(name: string): Promise<void> {
-    let command = '';
     switch (name) {
       case DependencyName.UX:
         await installUv();
         break;
       case DependencyName.NPM:
-        command = 'npm install -g npm';
+        await installNode();
         break;
       default:
         throw new Error(`Unknown dependency: ${name}`);
     }
-    await execAsync(command);
   }
 }
 
