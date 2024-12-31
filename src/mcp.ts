@@ -4,42 +4,21 @@ import {
   CallToolRequestSchema,
   ListToolsRequestSchema,
 } from '@modelcontextprotocol/sdk/types.js';
-import { z } from 'zod';
+import {
+  AddServerArgumentsSchema,
+  EnableDisableServerArgumentsSchema,
+  InstallPackageArgumentsSchema,
+  RemoveServerArgumentsSchema,
+  SearchPackagesArgumentsSchema,
+} from './types/index.js';
 import { ClaudeHostService } from './services/claude.js';
 import { RegistryService } from './services/registry.js';
 import { version } from './utils/version.js';
+import { z } from 'zod';
 
 // Initialize services
 const claudeSrv = new ClaudeHostService();
 const registrySrv = new RegistryService();
-
-// Define Zod schemas for MCP server management
-const MCPServerConfigSchema = z.object({
-  command: z.string(),
-  args: z.array(z.string()),
-});
-
-const AddServerArgumentsSchema = z.object({
-  name: z.string(),
-  config: MCPServerConfigSchema,
-});
-
-const RemoveServerArgumentsSchema = z.object({
-  name: z.string(),
-});
-
-const EnableDisableServerArgumentsSchema = z.object({
-  name: z.string(),
-});
-
-const SearchPackagesArgumentsSchema = z.object({
-  query: z.string().optional(),
-});
-
-const InstallPackageArgumentsSchema = z.object({
-  name: z.string(),
-  parameters: z.record(z.string()).optional(),
-});
 
 // Create server instance
 const server = new Server(
