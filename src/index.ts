@@ -8,7 +8,7 @@ export { startMCPServer } from './mcp.js';
 export * from './mcp.js';
 export * from './types/index.js';
 export * from './services/storage.js';
+export * from './services/claude.js';
 
-// Re-export core functionality
+// Re-export utilities
 export * from './utils/display.js';
-export * from './utils/formatter.js';
