@@ -22,7 +22,7 @@ export class DependencyService {
 
       switch (name) {
         case DependencyName.UX:
-          command = 'ux --version';
+          command = 'uv --version';
           break;
         case DependencyName.NPM:
           command = 'npm --version';
@@ -46,7 +46,7 @@ export class DependencyService {
     }
   }
 
-  async installDependency(name: string): Promise<void> {
+  async installDependency(name: DependencyName): Promise<void> {
     switch (name) {
       case DependencyName.UX:
         await installUv();
