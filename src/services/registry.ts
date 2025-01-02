@@ -21,7 +21,9 @@ export class RegistryService {
   private readonly registryBaseUrl = 'https://registry.mcphub.io';
 
   async getPackageInfo(name: string): Promise<PackageInfo> {
-    const registryUrl = `${this.registryBaseUrl}/registry/${name}`;
+    const registryUrl = `${this.registryBaseUrl}/registry/${encodeURIComponent(
+      name
+    )}`;
     const response = await fetch(registryUrl);
     if (!response.ok) {
       throw new Error(`Failed to fetch package info: ${response.statusText}`);
