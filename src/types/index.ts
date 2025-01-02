@@ -5,6 +5,7 @@ import { Server } from '@modelcontextprotocol/sdk/server/index.js';
 export const MCPServerConfigSchema = z.object({
   command: z.string(),
   args: z.array(z.string()),
+  env: z.record(z.string()).optional(),
 });
 
 export const AddServerArgumentsSchema = z.object({

@@ -9,7 +9,7 @@ import {
 import { logger } from '../../utils/logger.js';
 import { restartClaude } from '../../utils/cmd.js';
 import { registrySrv } from '../registry.js';
-import { makeParamsReplacer } from '../../utils/string.js';
+import { processPackageInfoToBootConfig } from '../../utils/command.js';
 import {
   ClaudeConfig,
   IHostService,
@@ -325,6 +325,38 @@ export class ClaudeHostService implements IHostService {
     );
   }
 
+  async getMCPServerWithStatus(
+    name: string
+  ): Promise<MCPServerWithStatus | null> {
+    const enabledServers = await this.getMCPServersInConfig();
+    const server = this.storageSrv.getMCPServer(name);
+
+    if (!server) {
+      // Check if it exists in enabled servers but not in storage
+      const enabledServer = enabledServers[name];
+      if (!enabledServer) {
+        return null;
+      }
+      // Add to storage if it exists in Claude config
+      const newServer = {
+        name,
+        claudeId: name,
+        appConfig: enabledServer,
+        from: MCPServerConfigSource.LOCAL,
+      };
+      this.storageSrv.addMCPServers([newServer]);
+      return {
+        info: newServer,
+        enabled: true,
+      };
+    }
+
+    return {
+      info: server,
+      enabled: !!enabledServers[server.name],
+    };
+  }
+
   async installPackage(
     name: string,
     paramValues: Record<string, string>
@@ -349,24 +381,14 @@ export class ClaudeHostService implements IHostService {
       );
     }
 
-    const replacer = makeParamsReplacer(paramValues);
+    if (!packageInfo.commandInfo) {
+      throw new Error('Package does not have command info');
+    }
 
-    // Process commandInfo args, replacing parameters with their values
-    const processedArgs = packageInfo.commandInfo.args.map(replacer);
-    const processedEnv = packageInfo.commandInfo.env
-      ? Object.fromEntries(
-          Object.entries(packageInfo.commandInfo.env).map(([key, value]) => [
-            key,
-            replacer(value),
-          ])
-        )
-      : undefined;
-
-    const appConfig = {
-      command: replacer(packageInfo.commandInfo.command),
-      args: processedArgs,
-      env: processedEnv,
-    };
+    const appConfig = processPackageInfoToBootConfig(
+      packageInfo.commandInfo,
+      paramValues
+    );
 
     this.storageSrv.addMCPServers([
       {
@@ -379,5 +401,63 @@ export class ClaudeHostService implements IHostService {
     await this.fileSrv.modifyClaudeConfigFile(config =>
       this.addMCPServerToConfigJSON(config, name, appConfig)
     );
+  }
+
+  async updateMCPServerParams(
+    name: string,
+    newParamValues: Record<string, string>
+  ): Promise<void> {
+    // Get existing server
+    const server = this.storageSrv.getMCPServer(name);
+    if (!server) {
+      throw new Error(`Server ${name} not found`);
+    }
+
+    // Get package info to validate parameters
+    const packageInfo = await registrySrv.getPackageInfo(server.name);
+    if (!packageInfo.commandInfo) {
+      throw new Error('Package does not have command info');
+    }
+
+    // Validate parameters
+    for (const [key] of Object.entries(newParamValues)) {
+      if (!packageInfo.parameters[key]) {
+        throw new Error(`Unknown parameter: ${key}`);
+      }
+    }
+
+    // Check required parameters
+    const missingParams = Object.entries(packageInfo.parameters)
+      .filter(([key, info]) => info.required && !newParamValues[key])
+      .map(([key]) => key);
+
+    if (missingParams.length > 0) {
+      throw new Error(
+        `Missing required parameters: ${missingParams.join(', ')}`
+      );
+    }
+
+    // Process new config
+    const appConfig = processPackageInfoToBootConfig(
+      packageInfo.commandInfo,
+      newParamValues
+    );
+
+    // Update storage
+    this.storageSrv.addMCPServers([
+      {
+        ...server,
+        appConfig,
+        arguments: newParamValues,
+      },
+    ]);
+
+    // Update Claude config if enabled
+    const enabledServers = await this.getMCPServersInConfig();
+    if (enabledServers[name]) {
+      await this.fileSrv.modifyClaudeConfigFile(config =>
+        this.addMCPServerToConfigJSON(config, name, appConfig)
+      );
+    }
   }
 }

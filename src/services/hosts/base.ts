@@ -43,6 +43,9 @@ export interface IHostService {
 
   /**
    * Get all MCP servers with their enabled status
+   * This includes both servers from storage and Claude config
+   * If a server is in Claude config but not in storage, it will be added to storage
+   * @returns Array of MCP servers with their enabled status
    */
   getAllMCPServersWithStatus(): Promise<MCPServerWithStatus[]>;
 
@@ -79,6 +82,34 @@ export interface IHostService {
    * Restart Host application
    */
   restartHostApp(): Promise<void>;
+
+  /**
+   * Update parameters of an existing MCP server
+   * @param name Name of the MCP server to update
+   * @param paramValues New parameter values to apply
+   * @throws Error if server not found or parameter validation fails
+   */
+  updateMCPServerParams(
+    name: string,
+    paramValues: Record<string, string>
+  ): Promise<void>;
+
+  /**
+   * Get a specific MCP server with its enabled status by name
+   * @param name The name of the MCP server to get
+   * @returns The MCP server with its enabled status, or null if not found
+   */
+  getMCPServerWithStatus(name: string): Promise<MCPServerWithStatus | null>;
+
+  /**
+   * Install a package with parameters
+   * @param name Name of the package to install
+   * @param paramValues Parameters required for installation
+   */
+  installPackage(
+    name: string,
+    paramValues: Record<string, string>
+  ): Promise<void>;
 
   /**
    * Add MCPM itself as an MCP server

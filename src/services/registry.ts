@@ -1,3 +1,5 @@
+import { MCPServerConfig } from '../types';
+
 export interface PackageInfo {
   id: string;
   name: string;
@@ -12,13 +14,7 @@ export interface PackageInfo {
       description: string;
     }
   >;
-  commandInfo: {
-    command: string;
-    args: string[];
-    env?: {
-      [key: string]: string;
-    };
-  };
+  commandInfo?: MCPServerConfig;
 }
 
 export class RegistryService {
