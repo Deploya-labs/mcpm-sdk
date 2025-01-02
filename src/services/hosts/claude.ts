@@ -5,28 +5,18 @@ import {
   StoragedMCPServer,
   MCPServerConfigSource,
   StorageService,
-} from './storage.js';
-import { logger } from '../utils/logger.js';
-import { restartClaude } from '../utils/cmd.js';
-import { registrySrv } from './registry.js';
-
-export interface MCPServerBootConfig {
-  command: string;
-  args: string[];
-}
-
-export interface MCPServerMap {
-  [key: string]: MCPServerBootConfig;
-}
-
-export interface ClaudeConfig {
-  mcpServers?: MCPServerMap;
-}
-
-export interface MCPServerWithStatus {
-  info: StoragedMCPServer;
-  enabled: boolean;
-}
+} from '../storage.js';
+import { logger } from '../../utils/logger.js';
+import { restartClaude } from '../../utils/cmd.js';
+import { registrySrv } from '../registry.js';
+import { makeParamsReplacer } from '../../utils/string.js';
+import {
+  ClaudeConfig,
+  IHostService,
+  MCPServerBootConfig,
+  MCPServerMap,
+  MCPServerWithStatus,
+} from './base.js';
 
 export class ClaudeFileService {
   constructor(private readonly fs: typeof fsp = fsp) {}
@@ -129,7 +119,7 @@ export class ClaudeFileService {
   }
 }
 
-export class ClaudeHostService {
+export class ClaudeHostService implements IHostService {
   constructor(
     public readonly fileSrv: ClaudeFileService = new ClaudeFileService(),
     private readonly storageSrv: StorageService = StorageService.getInstance()
@@ -312,7 +302,7 @@ export class ClaudeHostService {
     this.storageSrv.clear();
   }
 
-  public async restartClaude(): Promise<void> {
+  public async restartHostApp(): Promise<void> {
     await restartClaude();
   }
 
@@ -359,23 +349,35 @@ export class ClaudeHostService {
       );
     }
 
-    // Process commandInfo args, replacing parameters with their values
-    const processedArgs = packageInfo.commandInfo.args.map(arg => {
-      if (arg.startsWith('**') && arg.endsWith('**')) {
-        const paramName = arg.slice(2, -2); // Remove ** from both ends
-        return paramValues[paramName] || arg;
-      }
-      return arg;
-    });
+    const replacer = makeParamsReplacer(paramValues);
 
-    // Add MCP server
-    await this.addMCPServer(
-      name,
+    // Process commandInfo args, replacing parameters with their values
+    const processedArgs = packageInfo.commandInfo.args.map(replacer);
+    const processedEnv = packageInfo.commandInfo.env
+      ? Object.fromEntries(
+          Object.entries(packageInfo.commandInfo.env).map(([key, value]) => [
+            key,
+            replacer(value),
+          ])
+        )
+      : undefined;
+
+    const appConfig = {
+      command: replacer(packageInfo.commandInfo.command),
+      args: processedArgs,
+      env: processedEnv,
+    };
+
+    this.storageSrv.addMCPServers([
       {
-        command: packageInfo.commandInfo.command,
-        args: processedArgs,
+        name,
+        appConfig,
+        from: MCPServerConfigSource.REMOTE,
+        arguments: paramValues,
       },
-      MCPServerConfigSource.REMOTE
+    ]);
+    await this.fileSrv.modifyClaudeConfigFile(config =>
+      this.addMCPServerToConfigJSON(config, name, appConfig)
     );
   }
 }

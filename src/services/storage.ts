@@ -1,7 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 import os from 'os';
-import { MCPServerBootConfig } from './claude.js';
+import { MCPServerBootConfig } from './hosts/base.js';
 
 export enum MCPServerConfigSource {
   LOCAL = 'local',
@@ -10,9 +10,13 @@ export enum MCPServerConfigSource {
 }
 
 export interface StoragedMCPServer {
+  registryId?: string;
   name: string;
   claudeId?: string;
   appConfig: MCPServerBootConfig;
+  arguments?: {
+    [key: string]: string;
+  };
   from?: MCPServerConfigSource;
 }
 

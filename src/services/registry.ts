@@ -15,6 +15,9 @@ export interface PackageInfo {
   commandInfo: {
     command: string;
     args: string[];
+    env?: {
+      [key: string]: string;
+    };
   };
 }
 

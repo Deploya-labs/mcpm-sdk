@@ -11,7 +11,7 @@ import {
   RemoveServerArgumentsSchema,
   SearchPackagesArgumentsSchema,
 } from './types/index.js';
-import { ClaudeHostService } from './services/claude.js';
+import { ClaudeHostService } from './services/hosts/claude.js';
 import { RegistryService } from './services/registry.js';
 import { z } from 'zod';
 
@@ -278,7 +278,7 @@ server.setRequestHandler(CallToolRequestSchema, async request => {
       case 'restart-claude': {
         try {
           // eslint-disable-next-line @typescript-eslint/no-unsafe-call
-          await claudeSrv.restartClaude();
+          await claudeSrv.restartHostApp();
           return {
             result: 'Claude.app has been restarted successfully',
           };
