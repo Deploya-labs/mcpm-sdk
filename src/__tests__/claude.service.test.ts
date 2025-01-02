@@ -2,9 +2,8 @@
 import {
   ClaudeFileService,
   ClaudeHostService,
-  MCPServerBootConfig,
-  ClaudeConfig,
-} from '../services/claude.js';
+} from '../services/hosts/claude.js';
+import { MCPServerBootConfig, ClaudeConfig } from '../services/hosts/base.js';
 
 describe('ClaudeHostService', () => {
   let claudeHostService: ClaudeHostService;
