@@ -15,6 +15,23 @@ export enum HostType {
 
 export class HostService implements IHostService {
   constructor(private readonly hostSrv: IHostService) {}
+  async updateMCPServerParams(
+    name: string,
+    paramValues: Record<string, string>
+  ): Promise<void> {
+    return await this.hostSrv.updateMCPServerParams(name, paramValues);
+  }
+  async getMCPServerWithStatus(
+    name: string
+  ): Promise<MCPServerWithStatus | null> {
+    return await this.hostSrv.getMCPServerWithStatus(name);
+  }
+  async installPackage(
+    name: string,
+    paramValues: Record<string, string>
+  ): Promise<void> {
+    return await this.hostSrv.installPackage(name, paramValues);
+  }
 
   static getInstanceByType(type: HostType): IHostService {
     switch (type) {
