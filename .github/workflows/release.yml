@@ -15,10 +15,10 @@ jobs:
           version: 10
 
       - name: Install corepack with bypass
-        run: npm i -g --force corepack && corepack enable
+        run: pnpm i -g --force corepack && corepack enable
 
       - name: Install dependencies
-        run: pnpm install
+        run: pnpm install --no-frozen-lockfile
 
       - name: Build it
         run: pnpm build
