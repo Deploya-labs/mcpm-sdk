@@ -9,6 +9,11 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      - name: Install pnpm
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10
+
       - name: Install corepack with bypass
         run: pnpm i -g --force corepack && corepack enable
 
