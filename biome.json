@@ -1,0 +1,527 @@
+{
+	"$schema": "https://biomejs.dev/schemas/1.9.4/schema.json",
+	"vcs": { "enabled": false, "clientKind": "git", "useIgnoreFile": false },
+	"files": { "ignoreUnknown": false, "ignore": [] },
+	"formatter": {
+		"enabled": true,
+		"useEditorconfig": true,
+		"formatWithErrors": false,
+		"indentStyle": "space",
+		"indentWidth": 2,
+		"lineEnding": "lf",
+		"lineWidth": 80,
+		"attributePosition": "auto",
+		"bracketSpacing": true
+	},
+	"organizeImports": { "enabled": true },
+	"linter": {
+		"enabled": true,
+		"rules": {
+			"recommended": false,
+			"complexity": {
+				"noBannedTypes": "error",
+				"noUselessThisAlias": "error",
+				"useArrowFunction": "off"
+			},
+			"correctness": {
+				"noInvalidUseBeforeDeclaration": "off",
+				"noUnusedVariables": "warn",
+				"useArrayLiterals": "off"
+			},
+			"style": {
+				"noInferrableTypes": "error",
+				"noNamespace": "error",
+				"noNonNullAssertion": "warn",
+				"useAsConstAssertion": "error",
+				"useBlockStatements": "off"
+			},
+			"suspicious": {
+				"noEmptyBlockStatements": "error",
+				"noEmptyInterface": "error",
+				"noExplicitAny": "off",
+				"noExtraNonNullAssertion": "error",
+				"noMisleadingInstantiator": "error",
+				"useAwait": "error",
+				"useNamespaceKeyword": "error"
+			}
+		},
+		"ignore": ["src/types/global.d.ts"]
+	},
+	"javascript": {
+		"formatter": {
+			"jsxQuoteStyle": "double",
+			"quoteProperties": "asNeeded",
+			"trailingCommas": "es5",
+			"semicolons": "asNeeded",
+			"arrowParentheses": "asNeeded",
+			"bracketSameLine": false,
+			"quoteStyle": "single",
+			"attributePosition": "auto",
+			"bracketSpacing": true
+		},
+		"globals": [
+			"Float32Array",
+			"Uint8ClampedArray",
+			"clearTimeout",
+			"clearImmediate",
+			"TextEncoder",
+			"Reflect",
+			"DataView",
+			"Set",
+			"BigUint64Array",
+			"clearInterval",
+			"queueMicrotask",
+			"Int16Array",
+			"global",
+			"root",
+			"globalThis",
+			"BigInt",
+			"Promise",
+			"Int32Array",
+			"setImmediate",
+			"Buffer",
+			"Float64Array",
+			"Symbol",
+			"Uint32Array",
+			"Uint8Array",
+			"Atomics",
+			"WeakMap",
+			"WebAssembly",
+			"Uint16Array",
+			"setTimeout",
+			"Proxy",
+			"Map",
+			"ArrayBuffer",
+			"BigInt64Array",
+			"SharedArrayBuffer",
+			"WeakSet",
+			"TextDecoder",
+			"URL",
+			"console",
+			"process",
+			"GLOBAL",
+			"URLSearchParams",
+			"setInterval",
+			"Int8Array",
+			"Intl"
+		]
+	},
+	"overrides": [
+		{
+			"include": ["*.cjs", ".*.cjs"],
+			"javascript": {
+				"globals": [
+					"Float32Array",
+					"Uint8ClampedArray",
+					"clearTimeout",
+					"clearImmediate",
+					"TextEncoder",
+					"Reflect",
+					"DataView",
+					"Set",
+					"BigUint64Array",
+					"clearInterval",
+					"queueMicrotask",
+					"Int16Array",
+					"global",
+					"root",
+					"globalThis",
+					"BigInt",
+					"Promise",
+					"require",
+					"Int32Array",
+					"setImmediate",
+					"Buffer",
+					"Float64Array",
+					"Symbol",
+					"Uint32Array",
+					"Uint8Array",
+					"Atomics",
+					"WeakMap",
+					"WebAssembly",
+					"Uint16Array",
+					"module",
+					"setTimeout",
+					"__dirname",
+					"Proxy",
+					"Map",
+					"ArrayBuffer",
+					"BigInt64Array",
+					"SharedArrayBuffer",
+					"WeakSet",
+					"TextDecoder",
+					"URL",
+					"console",
+					"process",
+					"__filename",
+					"GLOBAL",
+					"URLSearchParams",
+					"exports",
+					"setInterval",
+					"Int8Array",
+					"Intl"
+				]
+			},
+			"linter": { "rules": {} }
+		},
+		{
+			"include": ["*.mjs", ".*.mjs"],
+			"javascript": {
+				"globals": [
+					"Float32Array",
+					"Uint8ClampedArray",
+					"clearTimeout",
+					"clearImmediate",
+					"TextEncoder",
+					"Reflect",
+					"DataView",
+					"Set",
+					"BigUint64Array",
+					"clearInterval",
+					"queueMicrotask",
+					"Int16Array",
+					"global",
+					"root",
+					"globalThis",
+					"BigInt",
+					"Promise",
+					"Int32Array",
+					"setImmediate",
+					"Buffer",
+					"Float64Array",
+					"Symbol",
+					"Uint32Array",
+					"Uint8Array",
+					"Atomics",
+					"WeakMap",
+					"WebAssembly",
+					"Uint16Array",
+					"setTimeout",
+					"Proxy",
+					"Map",
+					"ArrayBuffer",
+					"BigInt64Array",
+					"SharedArrayBuffer",
+					"WeakSet",
+					"TextDecoder",
+					"URL",
+					"console",
+					"process",
+					"GLOBAL",
+					"URLSearchParams",
+					"setInterval",
+					"Int8Array",
+					"Intl"
+				]
+			},
+			"linter": { "rules": {} }
+		},
+		{
+			"include": ["*.ts", "*.tsx"],
+			"linter": {
+				"rules": {
+					"correctness": {
+						"noConstAssign": "off",
+						"noGlobalObjectCalls": "off",
+						"noInvalidConstructorSuper": "off",
+						"noNewSymbol": "off",
+						"noSetterReturn": "off",
+						"noUndeclaredVariables": "off",
+						"noUnreachable": "off",
+						"noUnreachableSuper": "off"
+					},
+					"style": {
+						"noArguments": "error",
+						"noVar": "error",
+						"useConst": "error"
+					},
+					"suspicious": {
+						"noDuplicateClassMembers": "off",
+						"noDuplicateObjectKeys": "off",
+						"noDuplicateParameters": "off",
+						"noFunctionAssign": "off",
+						"noImportAssign": "off",
+						"noRedeclare": "off",
+						"noUnsafeNegation": "off",
+						"useGetterReturn": "off",
+						"useValidTypeof": "off"
+					}
+				}
+			}
+		},
+		{
+			"include": ["*.ts", "*.tsx"],
+			"linter": {
+				"rules": {
+					"correctness": {
+						"noConstAssign": "off",
+						"noGlobalObjectCalls": "off",
+						"noInvalidConstructorSuper": "off",
+						"noNewSymbol": "off",
+						"noSetterReturn": "off",
+						"noUndeclaredVariables": "off",
+						"noUnreachable": "off",
+						"noUnreachableSuper": "off"
+					},
+					"style": {
+						"noArguments": "error",
+						"noVar": "error",
+						"useConst": "error"
+					},
+					"suspicious": {
+						"noDuplicateClassMembers": "off",
+						"noDuplicateObjectKeys": "off",
+						"noDuplicateParameters": "off",
+						"noFunctionAssign": "off",
+						"noImportAssign": "off",
+						"noRedeclare": "off",
+						"noUnsafeNegation": "off",
+						"useGetterReturn": "off",
+						"useValidTypeof": "off"
+					}
+				}
+			}
+		},
+		{
+			"include": ["*.ts", "*.tsx"],
+			"linter": {
+				"rules": {
+					"correctness": {
+						"noConstAssign": "off",
+						"noGlobalObjectCalls": "off",
+						"noInvalidConstructorSuper": "off",
+						"noNewSymbol": "off",
+						"noSetterReturn": "off",
+						"noUndeclaredVariables": "off",
+						"noUnreachable": "off",
+						"noUnreachableSuper": "off"
+					},
+					"style": {
+						"noArguments": "error",
+						"noVar": "error",
+						"useConst": "error"
+					},
+					"suspicious": {
+						"noDuplicateClassMembers": "off",
+						"noDuplicateObjectKeys": "off",
+						"noDuplicateParameters": "off",
+						"noFunctionAssign": "off",
+						"noImportAssign": "off",
+						"noRedeclare": "off",
+						"noUnsafeNegation": "off",
+						"useGetterReturn": "off",
+						"useValidTypeof": "off"
+					}
+				}
+			}
+		},
+		{
+			"include": ["*.cjs", ".*.cjs"],
+			"javascript": {
+				"globals": [
+					"Float32Array",
+					"Uint8ClampedArray",
+					"clearTimeout",
+					"clearImmediate",
+					"TextEncoder",
+					"Reflect",
+					"DataView",
+					"Set",
+					"BigUint64Array",
+					"clearInterval",
+					"queueMicrotask",
+					"Int16Array",
+					"global",
+					"root",
+					"globalThis",
+					"BigInt",
+					"Promise",
+					"require",
+					"Int32Array",
+					"setImmediate",
+					"Buffer",
+					"Float64Array",
+					"Symbol",
+					"Uint32Array",
+					"Uint8Array",
+					"Atomics",
+					"WeakMap",
+					"WebAssembly",
+					"Uint16Array",
+					"module",
+					"setTimeout",
+					"__dirname",
+					"Proxy",
+					"Map",
+					"ArrayBuffer",
+					"BigInt64Array",
+					"SharedArrayBuffer",
+					"WeakSet",
+					"TextDecoder",
+					"URL",
+					"console",
+					"process",
+					"__filename",
+					"GLOBAL",
+					"URLSearchParams",
+					"exports",
+					"setInterval",
+					"Int8Array",
+					"Intl"
+				]
+			},
+			"linter": { "rules": {} }
+		},
+		{
+			"include": ["*.mjs", ".*.mjs"],
+			"javascript": {
+				"globals": [
+					"Float32Array",
+					"Uint8ClampedArray",
+					"clearTimeout",
+					"clearImmediate",
+					"TextEncoder",
+					"Reflect",
+					"DataView",
+					"Set",
+					"BigUint64Array",
+					"clearInterval",
+					"queueMicrotask",
+					"Int16Array",
+					"global",
+					"root",
+					"globalThis",
+					"BigInt",
+					"Promise",
+					"Int32Array",
+					"setImmediate",
+					"Buffer",
+					"Float64Array",
+					"Symbol",
+					"Uint32Array",
+					"Uint8Array",
+					"Atomics",
+					"WeakMap",
+					"WebAssembly",
+					"Uint16Array",
+					"setTimeout",
+					"Proxy",
+					"Map",
+					"ArrayBuffer",
+					"BigInt64Array",
+					"SharedArrayBuffer",
+					"WeakSet",
+					"TextDecoder",
+					"URL",
+					"console",
+					"process",
+					"GLOBAL",
+					"URLSearchParams",
+					"setInterval",
+					"Int8Array",
+					"Intl"
+				]
+			},
+			"linter": { "rules": {} }
+		},
+		{
+			"include": ["*.ts", "*.tsx"],
+			"linter": {
+				"rules": {
+					"correctness": {
+						"noConstAssign": "off",
+						"noGlobalObjectCalls": "off",
+						"noInvalidConstructorSuper": "off",
+						"noNewSymbol": "off",
+						"noSetterReturn": "off",
+						"noUndeclaredVariables": "off",
+						"noUnreachable": "off",
+						"noUnreachableSuper": "off"
+					},
+					"style": {
+						"noArguments": "error",
+						"noVar": "error",
+						"useConst": "error"
+					},
+					"suspicious": {
+						"noDuplicateClassMembers": "off",
+						"noDuplicateObjectKeys": "off",
+						"noDuplicateParameters": "off",
+						"noFunctionAssign": "off",
+						"noImportAssign": "off",
+						"noRedeclare": "off",
+						"noUnsafeNegation": "off",
+						"useGetterReturn": "off",
+						"useValidTypeof": "off"
+					}
+				}
+			}
+		},
+		{
+			"include": ["*.ts", "*.tsx"],
+			"linter": {
+				"rules": {
+					"correctness": {
+						"noConstAssign": "off",
+						"noGlobalObjectCalls": "off",
+						"noInvalidConstructorSuper": "off",
+						"noNewSymbol": "off",
+						"noSetterReturn": "off",
+						"noUndeclaredVariables": "off",
+						"noUnreachable": "off",
+						"noUnreachableSuper": "off"
+					},
+					"style": {
+						"noArguments": "error",
+						"noVar": "error",
+						"useConst": "error"
+					},
+					"suspicious": {
+						"noDuplicateClassMembers": "off",
+						"noDuplicateObjectKeys": "off",
+						"noDuplicateParameters": "off",
+						"noFunctionAssign": "off",
+						"noImportAssign": "off",
+						"noRedeclare": "off",
+						"noUnsafeNegation": "off",
+						"useGetterReturn": "off",
+						"useValidTypeof": "off"
+					}
+				}
+			}
+		},
+		{
+			"include": ["*.ts", "*.tsx"],
+			"linter": {
+				"rules": {
+					"correctness": {
+						"noConstAssign": "off",
+						"noGlobalObjectCalls": "off",
+						"noInvalidConstructorSuper": "off",
+						"noNewSymbol": "off",
+						"noSetterReturn": "off",
+						"noUndeclaredVariables": "off",
+						"noUnreachable": "off",
+						"noUnreachableSuper": "off"
+					},
+					"style": {
+						"noArguments": "error",
+						"noVar": "error",
+						"useConst": "error"
+					},
+					"suspicious": {
+						"noDuplicateClassMembers": "off",
+						"noDuplicateObjectKeys": "off",
+						"noDuplicateParameters": "off",
+						"noFunctionAssign": "off",
+						"noImportAssign": "off",
+						"noRedeclare": "off",
+						"noUnsafeNegation": "off",
+						"useGetterReturn": "off",
+						"useValidTypeof": "off"
+					}
+				}
+			}
+		}
+	]
+}
