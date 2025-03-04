@@ -63,6 +63,7 @@
     "biome": "^0.3.3",
     "chalk": "^5.4.1",
     "conf": "^13.1.0",
+    "corepack": "^0.32.0",
     "env-paths": "^3.0.0",
     "lint-staged": "^15.4.3",
     "prompts": "^2.4.2",
