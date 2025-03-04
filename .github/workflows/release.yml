@@ -18,4 +18,5 @@ jobs:
       - name: Build
         run: pnpm build
 
+      - name: Publish the package
       - run: pnpm dlx pkg-pr-new publish
