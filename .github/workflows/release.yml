@@ -16,7 +16,7 @@ jobs:
         run: npm install --no-frozen-lockfile
 
       - name: Build it
-        run: npm build
+        run: npm run build
 
       - name: Publish the package
-        run: npm dlx pkg-pr-new publish
+        run: npx pkg-pr-new publish
