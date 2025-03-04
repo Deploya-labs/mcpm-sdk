@@ -1,15 +1,15 @@
-import path from 'path';
-import os from 'os';
 import { promises as fsp } from 'fs';
+import os from 'os';
+import path from 'path';
+import { restartClaude } from '../../utils/cmd.js';
+import { processPackageInfoToBootConfig } from '../../utils/command.js';
+import { logger } from '../../utils/logger.js';
+import { registrySrv } from '../registry.js';
 import {
-  StoragedMCPServer,
   MCPServerConfigSource,
+  StoragedMCPServer,
   StorageService,
 } from '../storage.js';
-import { logger } from '../../utils/logger.js';
-import { restartClaude } from '../../utils/cmd.js';
-import { registrySrv } from '../registry.js';
-import { processPackageInfoToBootConfig } from '../../utils/command.js';
 import {
   ClaudeConfig,
   IHostService,
@@ -114,7 +114,7 @@ export class ClaudeFileService {
       );
     } else {
       // Linux/Unix Path
-      return path.join(home, '.config', 'claude', 'claude_desktop_config.json');
+      return path.join(home, '.config', 'Claude', 'claude_desktop_config.json');
     }
   }
 }
