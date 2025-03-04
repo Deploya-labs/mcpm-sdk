@@ -10,18 +10,18 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Install pnpm
-        uses: npm/action-setup@v4
+        uses: pnpm/action-setup@v4
         with:
           version: 10
 
       - name: Install corepack with bypass
-        run: npx i -g --force corepack && corepack enable
+        run: npm i -g --force corepack && corepack enable
 
       - name: Install dependencies
-        run: npx install
+        run: pnpm install
 
       - name: Build it
-        run: npx build
+        run: pnpm build
 
       - name: Publish the package
-        run: npx pkg-pr-new publish
+        run: pnpm dlx pkg-pr-new publish
