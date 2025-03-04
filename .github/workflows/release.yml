@@ -10,7 +10,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Install corepack with bypass
-      - run: pnpm i -g --force corepack && corepack enable
+        run: pnpm i -g --force corepack && corepack enable
 
       - name: Install dependencies
         run: pnpm install
@@ -19,4 +19,4 @@ jobs:
         run: pnpm build
 
       - name: Publish the package
-      - run: pnpm dlx pkg-pr-new publish
+        run: pnpm dlx pkg-pr-new publish
