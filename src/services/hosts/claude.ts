@@ -114,7 +114,7 @@ export class ClaudeFileService {
       );
     } else {
       // Linux/Unix Path
-      return path.join(home, '.config', 'claude', 'claude_desktop_config.json');
+      return path.join(home, '.config', 'Claude', 'claude_desktop_config.json');
     }
   }
 }
